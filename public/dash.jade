@@ -33,13 +33,13 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
           a(class='navbar-brand', href='dashboard.html')
-            img(src='img/stagerepohelpertext.png', width='200px', style='padding-top:15px; padding-left: 10px; position:relative')
-            img(src='img/stagerepohelperfig.png', width='40px', style='padding-top:10px; padding-left: 10px; position:relative')
+            img(src='img/stagerepohelpertext.png', width='200px', style='padding-top:5px; padding-left: 10px; position:relative')
+            img(src='img/stagerepohelperfig.png', width='40px', style='padding-top:10px; padding-left: 40px;')
         // Top Menu Items
         ul.nav.navbar-right.top-nav(ng-controller='myController')
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown')
-              i.fa.fa-user 
+              i.fa.fa-user
               |  {{ currentuserid }}
               b.caret
             ul.dropdown-menu
@@ -63,7 +63,7 @@ html(lang='en')
             .col-lg-12
               h1.page-header
                 | Dashboard
-                small Organization overview
+                small   Organization overview
               ol.breadcrumb
                 li.active
                   i.fa.fa-dashboard
@@ -73,9 +73,11 @@ html(lang='en')
           table.table.table-inverse
             tr(ng-repeat='events in repos.data')
               td
-                span(style='font-weight: 600; font-size: 20px;') {{events.name}}
-              td
-                span(style='font-weight: 350; font-size: 12px;') {{events.description}}
+                div
+                  span(style='font-weight: 600; font-size: 20px;') {{events.name}} <br/>
+                  span(style='font-weight: 350; font-size: 12px;') {{events.description}} <br/>
+                  div(style='border: 1px solid black; border-radius: 25px;')
+                    |   &nbsp Days since last update: {{events.dayssinceupdate}}
       // /#page-wrapper
     // /#wrapper
     // jQuery
