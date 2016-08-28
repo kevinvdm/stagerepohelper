@@ -8,7 +8,6 @@ angular.module("lightmeasurer",[]).controller("myController", function ($rootSco
           url: 'http://localhost:8080/repos'
           }).then (function successCallback(response) {
               $scope.repos = response;
-              
               //console.log(response);
           }, function errorCallback(response) {
           //alert("An error occured while fetching the user data!")
