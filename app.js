@@ -126,6 +126,7 @@ app.get('/user', ensureAuthenticated, function(req, res){
   res.send(req.user);
 });
 
+
 app.listen(8080);
 console.log('Magic happens on port 8080');
 
