@@ -8,16 +8,10 @@ var GitHubStrategy = require('passport-github2').Strategy;
 var partials = require('express-partials');
 var GitHub     = require('github-api');
 
-var gh = new GitHub();
+var myToken;
 
 var GITHUB_CLIENT_ID = "--insert-github-client-id-here--";
 var GITHUB_CLIENT_SECRET = "--insert-github-client-secret-here--";
-
-var allrepos;
-var yahoo = gh.getOrganization('AP-Elektronica-ICT');
-yahoo.getRepos(function(err, repos) {
-   allrepos = repos;
-})
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -33,7 +27,6 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
-
 
 // Use the GitHubStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
@@ -51,17 +44,26 @@ passport.use(new GitHubStrategy({
       // represent the logged-in user.  In a typical application, you would want
       // to associate the GitHub account with a user record in your database,
       // and return that user instead.
+
+      token = accessToken;
+
       return done(null, profile);
     });
   }
 ));
 
+var gh = new GitHub({
+   token: myToken
+});
 
-
+var allrepos;
+var yahoo = gh.getOrganization('AP-Elektronica-ICT');
+yahoo.getRepos(function(err, repos) {
+   allrepos = repos;
+})
 
 var app = express();
 
-// configure Express
 app.set('views', __dirname + '/public');
 app.set('view engine', 'jade');
 app.use(partials());
@@ -119,6 +121,11 @@ app.get('/logout', function(req, res){
 app.get('/repos', function(req, res){
   res.send(allrepos);
 });
+
+app.get('/user', ensureAuthenticated, function(req, res){
+  res.send(req.user);
+});
+
 
 app.listen(8080);
 console.log('Magic happens on port 8080');
