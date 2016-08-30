@@ -14,13 +14,7 @@ var myToken;
 var GITHUB_CLIENT_ID = "ec4c9e858d45e4073e06";
 var GITHUB_CLIENT_SECRET = "4b01e644d0a2057d09f05923442fb78325676a0a";
 
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session.  Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing.  However, since this example does not
-//   have a database of user records, the complete GitHub profile is serialized
-//   and deserialized.
+//Het complete GitHub profiel wordt ge(de)serialized. Hier start de passport session
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -29,17 +23,13 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-// Use the GitHubStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and GitHub
-//   profile), and invoke a callback with a user object.
+// Eigen GitHub strategy binnen passport. Wanneer de authenticatie geverifieerd is, worden te tokens en het profiel gereturned
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
     callbackURL: "http://stagerepohelper.herokuapp.com/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
       myToken = accessToken;
     process.nextTick(function () {
 
@@ -67,8 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-// Initialize Passport!  Also use passport.session() middleware, to support
-// persistent login sessions (recommended).
+//Passport wordt geinitialiseerd
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
@@ -81,28 +70,14 @@ app.get('/login', function(req, res){
 app.get('/', ensureAuthenticated, function(req, res){
   res.render('dash', { user: req.user });
 });
-
-// app.get('/login', function(req, res){
-//   res.render('login', { user: req.user });
-// });
-
-// GET /auth/github
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in GitHub authentication will involve redirecting
-//   the user to github.com.  After authorization, GitHub will redirect the user
-//   back to this application at /auth/github/callback
+//Hier wordt na authenticatie opnieuw verwezen naar de applicatie
 app.get('/auth/github',
   passport.authenticate('github', { scope: [ 'user:email' ] }),
   function(req, res){
-    // The request will be redirected to GitHub for authentication, so this
-    // function will not be called.
+      // functie wordt niet opgeroepen omdat de request meteen naar GitHub gaat
   });
 
-// GET /auth/github/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function will be called,
-//   which, in this example, will redirect the user to the home page.
+//De callback URL die eveneens aan GitHub gegeven moet worden. Wat er moet gebeuren na authenticatie, en wat er moet gebeuren als het mislukt (terug naar login scherm)
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
@@ -126,11 +101,7 @@ var port = process.env.PORT || 8080;
 app.listen(port);
 console.log('Magic happens on port 8080');
 
-// Simple route middleware to ensure user is authenticated.
-//   Use this route middleware on any resource that needs to be protected.  If
-//   the request is authenticated (typically via a persistent login session),
-//   the request will proceed.  Otherwise, the user will be redirected to the
-//   login page.
+// functie om uit te maken of er een sessie plaatsvindt. Als er een gebruiker is (req.user) wordt de volgende stap toegelaten, anders wordt het login scherm opnieuw geladen
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
