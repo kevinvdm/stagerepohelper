@@ -93,11 +93,11 @@ html(lang='en')
                         img(src='img/document-icon.png', title='Open log' width='20px')
                 div(ng-show="showcommits" style="width:60%; height: 90px; float:right;")
                       p <b>Total amount of commits: </b> {{commitamount}}
-                      p <b>Latest commit (click to go up): </b> &nbsp Message: {{commits[commitcounter].commit.message}}
-                      p                                               Author: {{commits[commitcounter].author.login}} &nbsp <img ng-src="{{commits[commitcounter].author.avatar_url}}" width="30px">
+                      p <b>Latest commit (click to go up): </b> &nbsp <b>Message:</b> {{commits[commitcounter].commit.message}}
+                      p                                               <b>Author:</b> {{commits[commitcounter].author.login}} &nbsp <img ng-src="{{commits[commitcounter].author.avatar_url}}" width="30px">
                 div(ng-show="showissues && events.open_issues > 0" style="width:60%; height: 90px; float:right;")
-                      p <b>Latest open issue (click to go up): </b> Description: {{issues[issuecounter].body}}
-                      p                     Author: {{issues[issuecounter].user.login}} &nbsp <img ng-src="{{issues[issuecounter].user.avatar_url}}" width="30px">
+                      p <b>Latest open issue (click to go up): </b> <b>Description:</b> {{issues[issuecounter].body}}
+                      p                     <b>Author:</b> {{issues[issuecounter].user.login}} &nbsp <img ng-src="{{issues[issuecounter].user.avatar_url}}" width="30px">
                       //- p <b>Second to latest issue</b> Description: {{issues[0].body}}
       // /#page-wrapper
     // /#wrapper
