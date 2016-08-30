@@ -33,8 +33,10 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
           a(class='navbar-brand', href='dashboard.html')
-            img(src='img/stagerepohelpertext.png', width='200px', style='padding-top:5px; padding-left: 10px; position:relative')
-            img(src='img/stagerepohelperfig.png', width='40px', style='padding-top:10px; padding-left: 40px;')
+            div
+              img(src='img/stagerepohelpertext.png', width='200px', style='padding-top:5px; padding-left: 10px; float:left')
+            div
+              img(src='img/stagerepohelperfig.png', width='40px', height="40px", style='padding-top:10px; padding-left: 40px; position: absolute;')
         // Top Menu Items
         ul.nav.navbar-right.top-nav(ng-controller='myController')
           li.dropdown
@@ -72,12 +74,31 @@ html(lang='en')
         .list-group(ng-controller='myController')
           table.table.table-inverse
             tr(ng-repeat='events in repos.data')
-              td
-                div
-                  span(style='font-weight: 600; font-size: 20px;') {{events.name}} <br/>
+              td(height="150px")
+                div(style="float:left; width:40%;")
+                  span(style='font-weight: 600; font-size: 20px;') {{events.name}} &nbsp
+                  a(href= '{{events.html_url}}' )
+                    img(src='img/github.png', width='20px')
+                    <br/>
+                  img(ng-src='{{events.owner.avatar_url}}', title='{{events.owner.login}}' width='40px')
+                  &nbsp
                   span(style='font-weight: 350; font-size: 12px;') {{events.description}} <br/>
-                  div(style='border: 1px solid black; border-radius: 25px;')
-                    |   &nbsp Days since last update: {{events.dayssinceupdate}}
+                  div(width="40%" style="float:left;")
+                    div(ng-mouseenter="loadCommits(events); showcommits = true" ng-click="commitcounter = commitcounter + 1" ng-mouseleave="showcommits = false; commitcounter = 0;" ng-style="events.dayssinceupdate < 200 && {'background-color': '#5cb85c'} || events.dayssinceupdate < 500 && {'background-color': '#f0ad4e'} || events.dayssinceupdate > 500 && {'background-color': '#d9534f'}" style='margin-right: 5px; border: 1px solid black; border-radius: 25px; float:left;')
+                      &nbsp Days since last commit: {{events.dayssinceupdate}} &nbsp
+                    div(ng-mouseenter="loadIssues(events); showissues = true" ng-click="issuecounter = issuecounter + 1" ng-mouseleave="showissues = false; issuecounter = 0" ng-style="events.open_issues == '0' && {'background-color': '#5cb85c'} || events.open_issues != 0 && {'background-color': '#d9534f'}" style='border: 1px solid black; border-radius: 25px; float:left;')
+                      &nbsp Open issues: {{events.open_issues}} &nbsp
+                    div(style='padding-left:3px; float:left;' ng-show="{{events.logurl}}")
+                      a(href= '{{events.logurl}}' )
+                        img(src='img/document-icon.png', title='Open log' width='20px')
+                div(ng-show="showcommits" style="width:60%; height: 90px; float:right;")
+                      p <b>Total amount of commits: </b> {{commitamount}}
+                      p <b>Latest commit (click to go up): </b> &nbsp Message: {{commits[commitcounter].commit.message}}
+                      p                                               Author: {{commits[commitcounter].author.login}} &nbsp <img ng-src="{{commits[commitcounter].author.avatar_url}}" width="30px">
+                div(ng-show="showissues && events.open_issues > 0" style="width:60%; height: 90px; float:right;")
+                      p <b>Latest open issue (click to go up): </b> Description: {{issues[issuecounter].body}}
+                      p                     Author: {{issues[issuecounter].user.login}} &nbsp <img ng-src="{{issues[issuecounter].user.avatar_url}}" width="30px">
+                      //- p <b>Second to latest issue</b> Description: {{issues[0].body}}
       // /#page-wrapper
     // /#wrapper
     // jQuery

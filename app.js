@@ -8,10 +8,11 @@ var GitHubStrategy = require('passport-github2').Strategy;
 var partials = require('express-partials');
 var GitHub     = require('github-api');
 
+var allrepos;
 var myToken;
 
-var GITHUB_CLIENT_ID = "--insert-github-client-id-here--";
-var GITHUB_CLIENT_SECRET = "--insert-github-client-secret-here--";
+var GITHUB_CLIENT_ID = "ec4c9e858d45e4073e06";
+var GITHUB_CLIENT_SECRET = "4b01e644d0a2057d09f05923442fb78325676a0a";
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -33,19 +34,13 @@ passport.deserializeUser(function(obj, done) {
 //   credentials (in this case, an accessToken, refreshToken, and GitHub
 //   profile), and invoke a callback with a user object.
 passport.use(new GitHubStrategy({
-    clientID: 'ec4c9e858d45e4073e06',
-    clientSecret: '4b01e644d0a2057d09f05923442fb78325676a0a',
+    clientID: GITHUB_CLIENT_ID,
+    clientSecret: GITHUB_CLIENT_SECRET,
     callbackURL: "http://localhost:8080/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      // To keep the example simple, the user's GitHub profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the GitHub account with a user record in your database,
-      // and return that user instead.
-
-      token = accessToken;
 
       return done(null, profile);
     });
@@ -53,7 +48,8 @@ passport.use(new GitHubStrategy({
 ));
 
 var gh = new GitHub({
-   token: myToken
+  username:'kevinvdm',
+  password:'megaman4'
 });
 
 var allrepos;
