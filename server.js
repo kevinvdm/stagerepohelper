@@ -122,8 +122,8 @@ app.get('/user', ensureAuthenticated, function(req, res){
   res.send(req.user);
 });
 
-
-app.listen(8080);
+var port = process.env.PORT || 8080;
+app.listen(port);
 console.log('Magic happens on port 8080');
 
 // Simple route middleware to ensure user is authenticated.
