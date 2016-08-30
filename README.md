@@ -2,7 +2,7 @@
 
 ## README
 
-STAGEREPOhelper is een applicatie ontwikkeld om in 1 oogopslag enkele statistieken te bekijken van de repositories waar studenten tijdens hun stage alle documenten en code opslaan. De webapp zelf wordt op Heroku gehost en is  [hier](stagerepohelper.herokuapp.com) te vinden.
+STAGEREPOhelper is een applicatie ontwikkeld om in 1 oogopslag enkele statistieken te bekijken van de repositories waar studenten tijdens hun stage alle documenten en code opslaan. De webapp zelf wordt op Heroku gehost en is  [hier](http://stagerepohelper.herokuapp.com) te vinden.
 
 Een GitHub-account is nodig om te applicatie te gebruiken! Authenticatie gebeurt via OAuth. Een token wordt gebruikt om de GitHub API te behandelen.
 
