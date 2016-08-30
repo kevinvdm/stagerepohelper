@@ -12,7 +12,7 @@ angular.module("lightmeasurer",[]).controller("myController", function ($scope, 
       function LoadRepos(){
           $http({
           method: 'GET',
-          url: 'http://localhost:8080/repos'
+          url: 'http://http://stagerepohelper.herokuapp.com/repos'
           }).then (function successCallback(response) {
               $scope.repos = response;
               for (i = 0; i < $scope.repos.data.length; i++)
@@ -69,7 +69,7 @@ angular.module("lightmeasurer",[]).controller("myController", function ($scope, 
       function LoadUser(){
             $http({
             method: 'GET',
-            url: 'http://localhost:8080/user'
+            url: 'http://http://stagerepohelper.herokuapp.com/user'
             }).then (function successCallback(response) {
 
                 $scope.currentuser = response;

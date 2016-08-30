@@ -36,10 +36,11 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/auth/github/callback"
+    callbackURL: "http://stagerepohelper.herokuapp.com/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
+      myToken = accessToken;
     process.nextTick(function () {
 
       return done(null, profile);
@@ -48,8 +49,7 @@ passport.use(new GitHubStrategy({
 ));
 
 var gh = new GitHub({
-  username:'kevinvdm',
-  password:'megaman4'
+  token: myToken
 });
 
 var allrepos;
