@@ -1,4 +1,4 @@
-angular.module("lightmeasurer",[]).controller("myController", function ($scope, $http, $q)
+angular.module("stagerepohelperapp",[]).controller("myController", function ($scope, $http, $q)
     {
       LoadRepos();
       LoadUser();
