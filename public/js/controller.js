@@ -38,7 +38,6 @@ angular.module("lightmeasurer",[]).controller("myController", function ($scope, 
 
       $scope.loadCommits = function(url){
             var commitsUrl = url.commits_url.replace('{/sha}', '');
-            //$scope.showcommits = true;
             $http({
             method: 'GET',
             url: commitsUrl
@@ -53,7 +52,6 @@ angular.module("lightmeasurer",[]).controller("myController", function ($scope, 
 
       $scope.loadIssues = function(url){
                 var issuesUrl = url.issues_url.replace('{/number}', '');
-                //$scope.showcommits = true;
                 $http({
                 method: 'GET',
                 url: issuesUrl
@@ -86,7 +84,6 @@ angular.module("lightmeasurer",[]).controller("myController", function ($scope, 
 
           // Convert both dates to milliseconds
           var date1_ms = date1.getTime()
-          //var date2_ms = date2.getTime()
 
           // Calculate the difference in milliseconds
           var difference_ms = Math.abs(date1_ms - date2)
